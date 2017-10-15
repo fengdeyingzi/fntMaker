@@ -1,5 +1,11 @@
-bin/
-gen/
-obj/
-libs/*/*.so
+/bin
+/gen
+/obj
+/libs/*/*.so
+/qqtool/bin
+/appcompat/bin
+/cardview/bin
+/design/bin
+/library/bin
+/recyclerview/bin
 
