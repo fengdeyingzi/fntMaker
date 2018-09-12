@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import com.xl.game.tool.SharedPreferencesUtil;
 
 public class MainActivity extends Activity implements View.OnClickListener
 {
@@ -55,6 +56,10 @@ public class MainActivity extends Activity implements View.OnClickListener
 			case R.id.text_gb2312:
 				text_fontText.append(getTextFromAssets(this,"gb2312.txt","UTF-8"));
 				break;
+			case R.id.text_zhChar:
+				text_fontText.append("“”！～？。，、…（）【】《》＊／＼＿＋－︿＜＃＄＆％＂＇〖〗『』※☆★—→←з」∠╳●○♂◆△▽");
+				break;
+			
 		}
 		
 	}
@@ -87,8 +92,41 @@ public class MainActivity extends Activity implements View.OnClickListener
 		text_fontHeight = (TextView) findViewById(R.id.edit_height);
 		text_fontText = (TextView) findViewById(R.id.fontText);
 		
+		SharedPreferencesUtil pre = new SharedPreferencesUtil(this);
+		text_fontPath.setText( pre.getString("fontPath",text_fontPath.getText().toString()));
+		text_fontSize.setText(pre.getString("fontSize",text_fontSize.getText().toString()));
 		
+		String text = pre.getString("text",text_fontText.getText().toString());
+		if(text.length()!=0)
+			text_fontText.setText(text);
+		text_fontWidth.setText(pre.getString("fontWidth",text_fontWidth.getText().toString()));
+		text_fontHeight.setText(pre.getString("fontHeight",text_fontHeight.getText().toString()));
+		colorView.setColor(pre.getInt("fontColor", colorView.getColor()));
+		text_pointY.setText(pre.getString("pointY",text_pointY.getText().toString()));
+		text_fileName.setText(pre.getString("fileName",text_fileName.getText().toString()));
     }
+
+	@Override
+	protected void onStop()
+	{
+		// TODO: Implement this method
+		
+		SharedPreferencesUtil pre = new SharedPreferencesUtil(this);
+		pre.setString("fontPath",text_fontPath.getText().toString());
+		pre.setString("fontSize",text_fontSize.getText().toString());
+		pre.setString("text",text_fontText.getText().toString());
+		pre.setString("fontWidth",text_fontWidth.getText().toString());
+		pre.setString("fontHeight",text_fontHeight.getText().toString());
+		pre.setInt("fontColor", colorView.getColor());
+		pre.setString("pointY", text_pointY.getText().toString());
+		pre.setString("fileName",text_fileName.getText().toString());
+		
+		
+		super.onStop();
+	}
+	
+	
+	
 	
 	//为根布局下所有按钮设置监听
 	public void setOnClickListenerAllButtons(View.OnClickListener listener){
@@ -171,6 +209,7 @@ public class MainActivity extends Activity implements View.OnClickListener
 			fontUtils.setTyleFace( Typeface.createFromFile(text_fontPath.getText().toString()));
 		
 		fontUtils.setText(fontText);
+		text_fontText.setText(fontUtils.getText());
 		fontUtils.setWidth(width);
 		fontUtils.setHeight(height);
 		fontUtils.setTextColor(color);

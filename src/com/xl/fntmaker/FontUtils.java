@@ -3,6 +3,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
+import android.graphics.Region;
 import android.graphics.Typeface;
 import android.os.Environment;
 import java.io.File;
@@ -64,6 +65,9 @@ public class FontUtils
 		this.fontText = dereplication_old(text);
 	}
 	
+	public String getText(){
+		return this.fontText;
+	}
 	
 	
 	//获取不重复的字符串
@@ -153,6 +157,10 @@ public class FontUtils
 			e.printStackTrace();
 		}
 	}
+	private boolean clipRect(Canvas canvas,int x,int y,int w,int h)
+	{
+		return canvas.clipRect(x,y,x+w,y+h,Region.Op.REPLACE);
+	}
 	
 	//生成图片
 	public Bitmap getBitmap()
@@ -178,6 +186,7 @@ public class FontUtils
 			else
 				font_w = this.fontSize;
 			
+			clipRect(canvas,xi,yi,fontSize,fontSize);
 			canvas.drawText(fontText, i, i + 1, xi, yi+fontSize+ypoint, paint);
 			
 			/*
