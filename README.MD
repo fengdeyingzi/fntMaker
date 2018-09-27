@@ -8,3 +8,9 @@ AIDE自带一个游戏开发引擎libgdx(如图)，用libgdx引擎就能在手�
 
 version 1.1
 -适配全面屏手机
+
+version 1.2
+新增记录保存
+
+version 1.3
+优化字体排版
