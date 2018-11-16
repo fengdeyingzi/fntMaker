@@ -71,9 +71,9 @@
 		<TextView
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
-			android:text="字体路径(ttf)"/>
+			android:text="字体路径 可留空(.ttf)"/>
 
-		<EditText
+		<com.xl.view.FileSelectView
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
 			android:ems="10"

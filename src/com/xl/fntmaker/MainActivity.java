@@ -23,12 +23,13 @@ import com.github.chrisbanes.photoview.PhotoView;
 import com.xl.fntmaker.FontUtils;
 import com.xl.game.math.Str;
 import com.xl.game.tool.DisplayUtil;
+import com.xl.game.tool.SharedPreferencesUtil;
 import com.xl.view.ColorDraw;
+import com.xl.view.FileSelectView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import com.xl.game.tool.SharedPreferencesUtil;
 
 public class MainActivity extends Activity implements View.OnClickListener
 {
@@ -67,7 +68,8 @@ public class MainActivity extends Activity implements View.OnClickListener
 	
 	ColorDraw colorView;
 	//字体路径 文字大小 位移 颜色 文件名
-	TextView text_fontPath, text_fontSize, text_pointY, text_color, text_fileName;
+	FileSelectView select_fontPath;
+	TextView text_fontSize, text_pointY, text_color, text_fileName;
 	TextView text_fontWidth, text_fontHeight;
     TextView text_fontText;
 	
@@ -83,7 +85,7 @@ public class MainActivity extends Activity implements View.OnClickListener
 		//Var3dFreeFont.createTextureAtlasFont("风的影子 饕餮",24,0xff505050);
         setOnClickListenerAllButtons(this);
 		colorView = (ColorDraw) findViewById(R.id.fontColor);
-		text_fontPath = (TextView) findViewById(R.id.edit_fontFile);
+		select_fontPath = (FileSelectView) findViewById(R.id.edit_fontFile);
 		text_fontSize = (TextView) findViewById(R.id.edit_fontSize);
 		text_pointY= (TextView) findViewById(R.id.edit_fontY);
 		//text_color = (TextView) findViewById(R.id.fontColor);
@@ -92,8 +94,9 @@ public class MainActivity extends Activity implements View.OnClickListener
 		text_fontHeight = (TextView) findViewById(R.id.edit_height);
 		text_fontText = (TextView) findViewById(R.id.fontText);
 		
+		select_fontPath.setThemeBlack(false);
 		SharedPreferencesUtil pre = new SharedPreferencesUtil(this);
-		text_fontPath.setText( pre.getString("fontPath",text_fontPath.getText().toString()));
+		select_fontPath.setPath( pre.getString("fontPath",select_fontPath.getPath()));
 		text_fontSize.setText(pre.getString("fontSize",text_fontSize.getText().toString()));
 		
 		String text = pre.getString("text",text_fontText.getText().toString());
@@ -112,7 +115,7 @@ public class MainActivity extends Activity implements View.OnClickListener
 		// TODO: Implement this method
 		
 		SharedPreferencesUtil pre = new SharedPreferencesUtil(this);
-		pre.setString("fontPath",text_fontPath.getText().toString());
+		pre.setString("fontPath",select_fontPath.getPath());
 		pre.setString("fontSize",text_fontSize.getText().toString());
 		pre.setString("text",text_fontText.getText().toString());
 		pre.setString("fontWidth",text_fontWidth.getText().toString());
@@ -205,8 +208,8 @@ public class MainActivity extends Activity implements View.OnClickListener
 		String fontText = text_fontText.getText().toString();
 		
 	    FontUtils fontUtils = new FontUtils();
-		if(text_fontPath.getText().length()!=0)
-			fontUtils.setTyleFace( Typeface.createFromFile(text_fontPath.getText().toString()));
+		if(select_fontPath.getPath().length()!=0 && (select_fontPath.getPath().endsWith(".ttf") || select_fontPath.getPath().endsWith(".TTF")))
+			fontUtils.setTyleFace( Typeface.createFromFile(select_fontPath.getPath()));
 		
 		fontUtils.setText(fontText);
 		text_fontText.setText(fontUtils.getText());
@@ -257,8 +260,8 @@ public class MainActivity extends Activity implements View.OnClickListener
 		String fontText = text_fontText.getText().toString();
 
 	    FontUtils fontUtils = new FontUtils();
-		if(text_fontPath.getText().length()!=0)
-			fontUtils.setTyleFace( Typeface.createFromFile(text_fontPath.getText().toString()));
+		if(select_fontPath.getPath().length()!=0 && (select_fontPath.getPath().endsWith(".ttf") || select_fontPath.getPath().endsWith(".TTF")))
+			fontUtils.setTyleFace( Typeface.createFromFile(select_fontPath.getPath()));
 		fontUtils.setText(fontText);
 		fontUtils.setWidth(width);
 		fontUtils.setHeight(height);
