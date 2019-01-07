@@ -94,7 +94,7 @@ public class MainActivity extends Activity implements View.OnClickListener
 		text_fontHeight = (TextView) findViewById(R.id.edit_height);
 		text_fontText = (TextView) findViewById(R.id.fontText);
 		
-		select_fontPath.setThemeBlack(false);
+		//select_fontPath.setThemeBlack(false);
 		SharedPreferencesUtil pre = new SharedPreferencesUtil(this);
 		select_fontPath.setPath( pre.getString("fontPath",select_fontPath.getPath()));
 		text_fontSize.setText(pre.getString("fontSize",text_fontSize.getText().toString()));
@@ -107,7 +107,50 @@ public class MainActivity extends Activity implements View.OnClickListener
 		colorView.setColor(pre.getInt("fontColor", colorView.getColor()));
 		text_pointY.setText(pre.getString("pointY",text_pointY.getText().toString()));
 		text_fileName.setText(pre.getString("fileName",text_fileName.getText().toString()));
+		Intent intent = getIntent();
+		if(intent.getData()!=null){
+			String path = intent.getData().getPath();
+			doFntFile(path);
+		}
+		
     }
+
+	@Override
+	protected void onNewIntent(Intent intent)
+	{
+		// TODO: Implement this method
+		super.onNewIntent(intent);
+		if(intent.getData()!=null){
+			String path = intent.getData().getPath();
+			doFntFile(path);
+		}
+	}
+	
+	
+	public void doFntFile(String path){
+		ReadFont readFont = new ReadFont(path);
+		if(readFont.isReadOk()){
+		text_fontText.setText(readFont.getText());
+		text_fontSize.setText(""+readFont.getTextSize());
+		colorView.setColor(readFont.getTextColor());
+		text_fontWidth.setText(""+readFont.getWidth());
+		text_fontHeight.setText(""+readFont.getHeight());
+		text_fileName.setText(readFont.getName());
+		text_pointY.setText(""+readFont.getPointY());
+		
+		
+		toast("读取字库成功");
+		}
+		else{
+			toast("字库读取失败");
+		}
+	}
+	
+	public void toast(String text){
+		Toast t = Toast.makeText(this,text,0);
+		t.setText(text);
+		t.show();
+	}
 
 	@Override
 	protected void onStop()
