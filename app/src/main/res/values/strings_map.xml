@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="hello" >风的影子 作品</string>
+<!--	<string name="app_name">libgdx字库生成器</string>-->
+
+	<string name="app_about">程序名：FntMaker\n作者：风的影子\n游戏开发QQ群：496717720</string>
+	<string name="app_help">使用本软件可以轻松制作libgdx所需的fnt字体文件，可结合手机端aide开发libgdx游戏，打开本软件，输入文字，字号，颜色等相关信息后，点击预览按钮查看生成后的png图片，预览时可以看到文字的对齐线条，如果没有对齐，可以修改【文字纵向位移】实现纵向对齐。\n
+如果觉得满意，点击生成按钮，将在AppProjects目录生成fnt字体文件以及png图片文件。
+	</string>
+
+	<string name="accept">确定</string>
+	<string name="refused">取消</string>
+</resources>
