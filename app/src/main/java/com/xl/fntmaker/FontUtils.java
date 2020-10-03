@@ -258,7 +258,8 @@ public class FontUtils
 	
 	//生成字体
 	public void saveFont(){
-		String bitmapname = this.fontName+".fnt";
+		String filename = this.fontName+".fnt";
+		String bitmapname = this.fontName+".png";
 		int scaleW=this.bitmap_width,scaleH=this.bitmap_height;
 		int yi=0;
 		int xi=0;
@@ -297,7 +298,7 @@ public class FontUtils
 		
 		try {
 			FileOutputStream outStream = new FileOutputStream(
-				getSDPath()+File.separator+ save_dir+File.separator+ bitmapname, false);
+				getSDPath()+File.separator+ save_dir+File.separator+ filename, false);
 			OutputStreamWriter writer = new OutputStreamWriter(outStream,
 															   "utf-8");
 			writer.write(buf_fnt.toString());
